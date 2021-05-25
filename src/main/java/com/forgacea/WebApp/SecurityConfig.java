@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.anyRequest().authenticated()
 					.and()
 				.formLogin()
-					.loginPage("/loginPage")
+					.loginPage("/login")
 		;
 	}
 	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {

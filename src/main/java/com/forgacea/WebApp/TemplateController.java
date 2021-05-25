@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class StaticController {
-	private static final Logger logger = LoggerFactory.getLogger(StaticController.class);
+public class TemplateController {
+	private static final Logger logger = LoggerFactory.getLogger(TemplateController.class);
 
-	@GetMapping("loginPage")
+	@GetMapping("login")
 	public String getLogin() {
 		logger.info("login page accessed");
-		return "loginPage.html";
+		return "login-page.html";
 	}
 	@GetMapping({"", "index"})
 	public String getIndex() {
 		logger.info("index accessed");
-		return "index.html";
+		return "index-page.html";
 	}
 }
