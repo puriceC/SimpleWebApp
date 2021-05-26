@@ -1,5 +1,7 @@
-package com.forgacea.WebApp;
+package com.forgacea.WebApp.Cotrollers;
 
+import com.forgacea.WebApp.Services.ItemService;
+import com.forgacea.WebApp.Models.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

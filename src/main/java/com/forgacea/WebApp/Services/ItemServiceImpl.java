@@ -1,5 +1,7 @@
-package com.forgacea.WebApp;
+package com.forgacea.WebApp.Services;
 
+import com.forgacea.WebApp.Repositories.ItemRepository;
+import com.forgacea.WebApp.Models.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

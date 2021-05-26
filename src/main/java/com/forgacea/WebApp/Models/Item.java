@@ -1,4 +1,4 @@
-package com.forgacea.WebApp;
+package com.forgacea.WebApp.Models;
 
 import lombok.Data;
 

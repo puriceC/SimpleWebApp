@@ -1,4 +1,6 @@
-package com.forgacea.WebApp;
+package com.forgacea.WebApp.Services;
+
+import com.forgacea.WebApp.Models.Item;
 
 import java.util.List;
 import java.util.Optional;
