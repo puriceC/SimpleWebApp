@@ -1,13 +1,14 @@
 package com.forgacea.WebApp;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ItemService {
 	List<Item> getItems();
 
-	Item getItemById(Integer id);
+	Optional<Item> findItem(Integer id);
 
-	void insertItem(Item item);
+	Item insertItem(Item item);
 
 	void updateItem(Integer id, Item item);
 

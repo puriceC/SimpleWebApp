@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/items")
@@ -25,20 +26,35 @@ public class ItemController {
 		return service.getItems();
 	}
 
+	@GetMapping({"/{id}"})
+	ResponseEntity<Item> getById(@PathVariable Integer id) {
+		logger.info("update called for item with id = " + id);
+		Optional<Item> returnedItem = service.findItem(id);
+		if (returnedItem.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(returnedItem.get(), HttpStatus.OK);
+	}
+
 	@PostMapping
 	ResponseEntity<Item> insert(@RequestBody Item item){
 		logger.info("insert called with " + item);
-		service.insertItem(item);
-		Item returnedItem = service.getItemById(item.id);
+		Item returnedItem = service.insertItem(item);
 		return new ResponseEntity<>(returnedItem, HttpStatus.OK);
 	}
 
 	@PutMapping({"/{id}"})
 	ResponseEntity<Item> update(@PathVariable Integer id, @RequestBody Item item) {
 		logger.info("update called for item with id = " + id + " and " + item);
+		if (service.findItem(id).isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 		service.updateItem(id, item);
-		Item returnedItem = service.getItemById(item.id);
-		return new ResponseEntity<>(returnedItem, HttpStatus.OK);
+		Optional<Item> updatedItem = service.findItem(id);
+		if (updatedItem.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(updatedItem.get(), HttpStatus.OK);
 	}
 
 	@DeleteMapping({"/{id}"})

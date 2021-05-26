@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -23,15 +24,15 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public Item getItemById(Integer id) {
-		logger.debug("getItemById called with id = " + id);
-		return repository.getById(id);
+	public Optional<Item> findItem(Integer id) {
+		logger.debug("findItem called with id = " + id);
+		return repository.findById(id);
 	}
 
 	@Override
-	public void insertItem (Item item) {
+	public Item insertItem (Item item) {
 		logger.debug("insertItem called with " + item);
-		repository.save(item);
+		return repository.save(item);
 	}
 
 	@Override
