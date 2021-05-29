@@ -5,7 +5,9 @@ import com.forgacea.WebApp.Models.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +32,14 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public List<Item> getItemPage(int pageSize, int pageNumber) {
 		logger.debug("getItemPage called with pageSize = " + pageSize + " and pageNumber = " + pageNumber);
-		Pageable pageable = Pageable.ofSize(pageSize).withPage(pageNumber);
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Item> itemPage = repository.findAll(pageable);
+		return itemPage.getContent();
+	}
+	@Override
+	public List<Item> getItemSortedPage(int pageSize, int pageNumber, String sortOrder) {
+		logger.debug("getItemSortedPage called with pageSize = " + pageSize + " and pageNumber = " + pageNumber + " and getItemSortedPage = '" + sortOrder + "'");
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortOrder));
 		Page<Item> itemPage = repository.findAll(pageable);
 		return itemPage.getContent();
 	}

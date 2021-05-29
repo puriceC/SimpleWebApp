@@ -25,9 +25,13 @@ public class ItemController {
 
 	@GetMapping
 	List<Item> get(@RequestParam(name = "page_size", defaultValue = "20") int pageSize,
-				   @RequestParam(name = "page_number", defaultValue = "0")  int pageNumber){
+				   @RequestParam(name = "page_number", defaultValue = "0")  int pageNumber,
+				   @RequestParam(name = "sort_by", defaultValue = "") String sortOrder){
 		logger.info("get called with pageSize = " + pageSize + " and pageNumber = " + pageNumber);
-		return service.getItemPage(pageSize, pageNumber);
+		if (sortOrder.isEmpty()) {
+			return service.getItemPage(pageSize, pageNumber);
+		}
+		return service.getItemSortedPage(pageSize, pageNumber, sortOrder);
 	}
 
 	@GetMapping({"/all"})

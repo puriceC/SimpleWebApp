@@ -10,6 +10,8 @@ public interface ItemService {
 
 	List<Item> getItemPage(int pageSize, int pageNumber);
 
+	List<Item> getItemSortedPage(int pageSize, int pageNumber, String sortOrder);
+
 	Optional<Item> findItem(Integer id);
 
 	Item insertItem(Item item);
