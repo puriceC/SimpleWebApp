@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface ItemService {
 	List<Item> getItems();
 
+	List<Item> getItemPage(int pageSize, int pageNumber);
+
 	Optional<Item> findItem(Integer id);
 
 	Item insertItem(Item item);

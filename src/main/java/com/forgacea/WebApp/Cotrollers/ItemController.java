@@ -22,7 +22,15 @@ public class ItemController {
 		this.service = service;
 	}
 
+
 	@GetMapping
+	List<Item> get(@RequestParam(name = "page_size", defaultValue = "20") int pageSize,
+				   @RequestParam(name = "page_number", defaultValue = "0")  int pageNumber){
+		logger.info("get called with pageSize = " + pageSize + " and pageNumber = " + pageNumber);
+		return service.getItemPage(pageSize, pageNumber);
+	}
+
+	@GetMapping({"/all"})
 	List<Item> getAll(){
 		logger.info("getAll called");
 		return service.getItems();

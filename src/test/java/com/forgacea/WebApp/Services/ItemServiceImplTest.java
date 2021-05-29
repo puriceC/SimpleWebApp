@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
@@ -86,7 +87,6 @@ class ItemServiceImplTest {
 		Item item = new Item();
 		item.setId(id);
 		item.setName("item1");
-		given(itemRepository.findById(id)).willReturn(Optional.of(item));
 		given(itemRepository.getById(id)).willReturn(item);
 		// when
 		underTest.deleteItem(id);
