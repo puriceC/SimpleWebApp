@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.String.format;
+
 @Service
 public class ItemServiceImpl implements ItemService {
 	private static final Logger logger = LoggerFactory.getLogger(ItemServiceImpl.class);
@@ -31,41 +33,41 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public List<Item> getItemPage(int pageSize, int pageNumber) {
-		logger.debug("getItemPage called with pageSize = " + pageSize + " and pageNumber = " + pageNumber);
+		logger.debug(format("getItemPage called with pageSize = %d and pageNumber = %d", pageSize, pageNumber));
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Item> itemPage = repository.findAll(pageable);
 		return itemPage.getContent();
 	}
 	@Override
-	public List<Item> getItemSortedPage(int pageSize, int pageNumber, String sortOrder) {
-		logger.debug("getItemSortedPage called with pageSize = " + pageSize + " and pageNumber = " + pageNumber + " and getItemSortedPage = '" + sortOrder + "'");
-		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortOrder));
+	public List<Item> getItemSortedPage(int pageSize, int pageNumber, String sortBy) {
+		logger.debug(format("getItemSortedPage called with pageSize = %d, pageNumber = %d and sortBy = '%s'", pageSize, pageNumber, sortBy));
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
 		Page<Item> itemPage = repository.findAll(pageable);
 		return itemPage.getContent();
 	}
 
 	@Override
 	public Optional<Item> findItem(Integer id) {
-		logger.debug("findItem called with id = " + id);
+		logger.debug(format("findItem called with id = %d", id));
 		return repository.findById(id);
 	}
 
 	@Override
 	public Item insertItem (Item item) {
-		logger.debug("insertItem called with " + item);
+		logger.debug(format("insertItem called with %s", item));
 		return repository.save(item);
 	}
 
 	@Override
 	public void updateItem(Integer id, Item item) {
-		logger.debug("updateItem called for item with id = " + id + " and " + item);
+		logger.debug(format("updateItem called for item with id = %d and %s", id, item));
 		item.setId(id);
 		repository.save(item);
 	}
 
 	@Override
 	public void deleteItem(Integer id) {
-		logger.debug("deleteItem called on item with id = " + id);
+		logger.debug(format("deleteItem called on item with id = %d", id));
 		Item itemToBeDeleted = repository.getById(id);
 		repository.delete(itemToBeDeleted);
 	}
