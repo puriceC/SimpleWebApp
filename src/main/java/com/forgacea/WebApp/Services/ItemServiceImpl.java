@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,9 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public List<Item> getItemPage(int pageSize, int pageNumber) {
 		logger.debug(format("getItemPage called with pageSize = %d and pageNumber = %d", pageSize, pageNumber));
+		if (pageSize == 0){
+			return getItems();
+		}
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Item> itemPage = repository.findAll(pageable);
 		return itemPage.getContent();
@@ -41,6 +45,10 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public List<Item> getItemSortedPage(int pageSize, int pageNumber, String sortBy) {
 		logger.debug(format("getItemSortedPage called with pageSize = %d, pageNumber = %d and sortBy = '%s'", pageSize, pageNumber, sortBy));
+		if (Arrays.stream(Item.class.getDeclaredFields()).noneMatch(field -> field.getName().equals(sortBy))) {
+			logger.warn(format("Value of sortBy ('%s') was not found in class Item and will be ignored", sortBy));
+			return getItemPage(pageSize, pageNumber);
+		}
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
 		Page<Item> itemPage = repository.findAll(pageable);
 		return itemPage.getContent();

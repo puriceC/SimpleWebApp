@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${view_object}"></title>
+</head>
+<body>
+<form action="" method="post">
+    <input th:each="field : ${fields}"
+           th:name='${field.getName()}'
+           th:placeholder="${field.getName()}"
+           type='text'/>
+    <input value="Create" type="submit"/>
+</form>
+</body>
+</html>

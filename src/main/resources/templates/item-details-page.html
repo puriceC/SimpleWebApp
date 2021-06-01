@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${view_object}"></title>
+</head>
+<body>
+<div th:switch="${details}">
+
+    <div th:case="null">
+        <h1>Resource not found!</h1>
+        <a th:href="@{'/' + ${view_object} + '/'}">Go back?</a>
+    </div>
+
+    <form th:case="*" action="" method="post">
+        <input th:each="field : ${fields}"
+               th:name='${field.getName()}'
+               th:value="${details.get(field.getName())}"
+               th:placeholder="${field.getName()}"
+               type='text'/>
+        <input value='Update' type="submit"/>
+        <input value='Delete' type="button"/>
+    </form>
+</div>
+
+</body>
+</html>
