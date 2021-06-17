@@ -70,11 +70,4 @@ public class TemplateController {
 		model.addAttribute("fields", Item.class.getDeclaredFields());
 		return "new-item-page";
 	}
-
-	@PostMapping(path = "items/new", consumes = "application/x-www-form-urlencoded")
-	public String InsertItemAndRedirect(Item item, Model model) {
-		itemService.insertItem(item);
-		//model.addAttribute("view_object", "items");
-		return "redirect:/items";
-	}
 }
