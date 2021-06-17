@@ -8,6 +8,7 @@
 <body>
 <form th:action="@{'/api/' + ${view_object}}">
     <input th:each="field : ${fields}"
+           th:if='${field.getName() != "id"}'
            th:name='${field.getName()}'
            th:placeholder="${field.getName()}"
            type='text'/>

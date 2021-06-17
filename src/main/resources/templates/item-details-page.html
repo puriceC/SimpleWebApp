@@ -19,6 +19,7 @@
                th:name='${field.getName()}'
                th:value="${details.get(field.getName())}"
                th:placeholder="${field.getName()}"
+               th:disabled='${field.getName() == "id"}'
                type='text'/>
         <input value='Update' onclick="submitForm(this)" type="button"/>
         <input value='Delete' onclick="submitForm(this)" type="button"/>
