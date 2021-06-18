@@ -31,18 +31,9 @@ public class ItemController {
 				   @RequestParam(name = "page_number", defaultValue = "0")  int pageNumber,
 				   @RequestParam(name = "sort_by", defaultValue = "") String sortBy){
 		logger.info(format("get called with pageSize = %d, pageNumber = %d, and sortBy = %s", pageSize, pageNumber, sortBy));
-		if (Arrays.stream(Item.class.getFields()).noneMatch(field -> field.getName().equals(sortBy))) {
-			logger.warn(format("Value of sortBy ('%s') was not found in class Item and will be ignored", sortBy));
-			return service.getItemPage(pageSize, pageNumber);
-		}
 		return service.getItemSortedPage(pageSize, pageNumber, sortBy);
 	}
 
-	@GetMapping({"/all"})
-	List<Item> getAll(){
-		logger.info("getAll called");
-		return service.getItems();
-	}
 
 	@GetMapping({"/{id}"})
 	ResponseEntity<Item> getById(@PathVariable Integer id) {

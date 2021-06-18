@@ -35,21 +35,28 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public List<Item> getItemPage(int pageSize, int pageNumber) {
 		logger.debug(format("getItemPage called with pageSize = %d and pageNumber = %d", pageSize, pageNumber));
-		if (pageSize == 0){
-			return getItems();
-		}
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		Page<Item> itemPage = repository.findAll(pageable);
-		return itemPage.getContent();
+		return getItemSortedPage(pageSize, pageNumber, "");
 	}
+
 	@Override
 	public List<Item> getItemSortedPage(int pageSize, int pageNumber, String sortBy) {
 		logger.debug(format("getItemSortedPage called with pageSize = %d, pageNumber = %d and sortBy = '%s'", pageSize, pageNumber, sortBy));
+		Sort sort = sortBy.isEmpty() ? Sort.unsorted() : Sort.by(sortBy);
+
 		if (Arrays.stream(Item.class.getDeclaredFields()).noneMatch(field -> field.getName().equals(sortBy))) {
 			logger.warn(format("Value of sortBy ('%s') was not found in class Item and will be ignored", sortBy));
-			return getItemPage(pageSize, pageNumber);
+			sort = Sort.unsorted();
 		}
-		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+		if (pageSize < 1){
+			logger.warn(format("Value of page size (%d) less then 1 and will be ignored", pageSize));
+			pageSize = 20;
+		}
+		if (pageNumber < 0){
+			logger.warn(format("Value of page number (%d) less then 0 and will be set to 0", pageNumber));
+			pageNumber = 0;
+		}
+
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 		Page<Item> itemPage = repository.findAll(pageable);
 		return itemPage.getContent();
 	}

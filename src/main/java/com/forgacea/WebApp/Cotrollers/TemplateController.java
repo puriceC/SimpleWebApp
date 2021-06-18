@@ -37,9 +37,12 @@ public class TemplateController {
 	}
 
 	@GetMapping("items")
-	public String viewAllItemsPage(Model model) {
+	public String viewAllItemsPage(@RequestParam(name = "page_size", defaultValue = "20") int pageSize,
+								   @RequestParam(name = "page_number", defaultValue = "0")  int pageNumber,
+								   @RequestParam(name = "sort_by", defaultValue = "") String sortBy,
+								   Model model) {
 		// get a list of items
-		List<Item> items = itemService.getItemSortedPage(0, 0, null);
+		List<Item> items = itemService.getItemSortedPage(pageSize, pageNumber, sortBy);
 		// turn each item from java Object into a map of its properties
 		Object[] rows = items.stream().map(item -> objectMapper.convertValue(item, Map.class)).toArray();
 		// get the names of all fields of class Item
