@@ -2,6 +2,7 @@ package com.forgacea.WebApp.Services;
 
 import com.forgacea.WebApp.Models.Item;
 import com.forgacea.WebApp.Repositories.ItemRepository;
+import com.forgacea.WebApp.Services.Implementations.ItemServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +15,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class ItemServiceImplTest {
+class ItemServiceTest {
 
 	@Mock private ItemRepository itemRepository;
 

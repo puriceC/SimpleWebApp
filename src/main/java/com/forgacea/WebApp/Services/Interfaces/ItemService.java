@@ -1,4 +1,4 @@
-package com.forgacea.WebApp.Services;
+package com.forgacea.WebApp.Services.Interfaces;
 
 import com.forgacea.WebApp.Models.Item;
 

@@ -1,7 +1,8 @@
-package com.forgacea.WebApp.Services;
+package com.forgacea.WebApp.Services.Implementations;
 
 import com.forgacea.WebApp.Repositories.ItemRepository;
 import com.forgacea.WebApp.Models.Item;
+import com.forgacea.WebApp.Services.Interfaces.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;

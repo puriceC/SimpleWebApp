@@ -1,8 +1,9 @@
 package com.forgacea.WebApp.Cotrollers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.forgacea.WebApp.Cotrollers.ApiControllers.ItemController;
 import com.forgacea.WebApp.Models.Item;
-import com.forgacea.WebApp.Services.ItemService;
+import com.forgacea.WebApp.Services.Interfaces.ItemService;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.BDDMockito.given;

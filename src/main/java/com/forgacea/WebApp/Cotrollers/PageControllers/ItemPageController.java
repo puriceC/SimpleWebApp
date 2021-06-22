@@ -1,42 +1,35 @@
-package com.forgacea.WebApp.Cotrollers;
+package com.forgacea.WebApp.Cotrollers.PageControllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.forgacea.WebApp.Models.Item;
-import com.forgacea.WebApp.Services.ItemService;
+import com.forgacea.WebApp.Services.Interfaces.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Controller
-@RequestMapping("/")
-public class TemplateController {
-	private static final Logger logger = LoggerFactory.getLogger(TemplateController.class);
+@RequestMapping("/items")
+public class ItemPageController {
+	private static final Logger logger = LoggerFactory.getLogger(ItemPageController.class);
 
-	@Autowired private ItemService itemService;
-	@Autowired private ObjectMapper objectMapper;
+	@Autowired
+	private ItemService itemService;
+	@Autowired
+	private ObjectMapper objectMapper;
 
-	@GetMapping("login")
-	public String getLogin() {
-		logger.info("login page accessed");
-		return "login-page";
-	}
-	@GetMapping({"", "index"})
-	public String getIndex() {
-		logger.info("index accessed");
-		return "index-page";
-	}
-
-	@GetMapping("items")
+	@GetMapping
 	public String viewAllItemsPage(@RequestParam(name = "page_size", defaultValue = "20") int pageSize,
 								   @RequestParam(name = "page_number", defaultValue = "0")  int pageNumber,
 								   @RequestParam(name = "sort_by", defaultValue = "") String sortBy,
@@ -52,10 +45,11 @@ public class TemplateController {
 		model.addAttribute("rows", rows);
 		model.addAttribute("page_number", pageNumber);
 		model.addAttribute("page_size", pageSize);
+		logger.info("all page accessed");
 		return "all-page";
 	}
 
-	@GetMapping("items/{id}")
+	@GetMapping("/{id}")
 	public String viewItemDetailsPage(@PathVariable("id") int id, Model model) {
 		Optional<Item> item = itemService.findItem(id);
 
@@ -66,13 +60,15 @@ public class TemplateController {
 		} else {
 			model.addAttribute("details", null);
 		}
+		logger.info("details page accessed");
 		return "details-page";
 	}
 
-	@GetMapping("items/new")
+	@GetMapping("/new")
 	public String viewNewItemPage(Model model) {
 		model.addAttribute("entity", "items");
 		model.addAttribute("fields", Item.class.getDeclaredFields());
+		logger.info("new page accessed");
 		return "new-page";
 	}
 }

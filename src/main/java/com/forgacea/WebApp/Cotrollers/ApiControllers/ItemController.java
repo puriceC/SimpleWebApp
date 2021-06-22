@@ -1,6 +1,6 @@
-package com.forgacea.WebApp.Cotrollers;
+package com.forgacea.WebApp.Cotrollers.ApiControllers;
 
-import com.forgacea.WebApp.Services.ItemService;
+import com.forgacea.WebApp.Services.Interfaces.ItemService;
 import com.forgacea.WebApp.Models.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
