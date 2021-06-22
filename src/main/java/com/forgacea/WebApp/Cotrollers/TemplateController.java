@@ -47,32 +47,32 @@ public class TemplateController {
 		Object[] rows = items.stream().map(item -> objectMapper.convertValue(item, Map.class)).toArray();
 		// get the names of all fields of class Item
 		Object[] headers = Arrays.stream(Item.class.getDeclaredFields()).map(Field::getName).toArray();
-		model.addAttribute("view_object", "items");
+		model.addAttribute("entity", "items");
 		model.addAttribute("headers", headers);
 		model.addAttribute("rows", rows);
 		model.addAttribute("page_number", pageNumber);
 		model.addAttribute("page_size", pageSize);
-		return "all-items-page";
+		return "all-page";
 	}
 
 	@GetMapping("items/{id}")
 	public String viewItemDetailsPage(@PathVariable("id") int id, Model model) {
 		Optional<Item> item = itemService.findItem(id);
 
-		model.addAttribute("view_object", "items");
+		model.addAttribute("entity", "items");
 		model.addAttribute("fields", Item.class.getDeclaredFields());
 		if (item.isPresent()) {
 			model.addAttribute("details", objectMapper.convertValue(item.get(), Map.class));
 		} else {
 			model.addAttribute("details", null);
 		}
-		return "item-details-page";
+		return "details-page";
 	}
 
 	@GetMapping("items/new")
 	public String viewNewItemPage(Model model) {
-		model.addAttribute("view_object", "items");
+		model.addAttribute("entity", "items");
 		model.addAttribute("fields", Item.class.getDeclaredFields());
-		return "new-item-page";
+		return "new-page";
 	}
 }

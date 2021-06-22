@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${view_object}"></title>
+    <title th:text="${entity}"></title>
     <script th:src="@{/functions.js}" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -14,7 +14,7 @@
     </div>
 
     <form th:case="*"
-          th:action="@{'/api/' + ${view_object} + '/' + ${details.get('id')}}">
+          th:action="@{'/api/' + ${entity} + '/' + ${details.get('id')}}">
         <input th:each="field : ${fields}"
                th:name='${field.getName()}'
                th:value="${details.get(field.getName())}"

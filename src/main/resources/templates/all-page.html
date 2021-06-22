@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${view_object}"></title>
+    <title th:text="${entity}"></title>
     <link th:href="@{/styles.css}" rel="stylesheet">
     <script th:src="@{/functions.js}" type="text/javascript"></script>
 </head>
@@ -20,7 +20,7 @@
     <tr th:each="row : ${rows}">
         <td th:each="header : ${headers}">
             <a th:text="${row.get(header)}"
-               th:href="@{'/' + ${view_object} + '/' + ${row.get('id')}}"></a>
+               th:href="@{'/' + ${entity} + '/' + ${row.get('id')}}"></a>
         </td>
     </tr>
     </tbody>
