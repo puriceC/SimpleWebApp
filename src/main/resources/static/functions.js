@@ -35,10 +35,30 @@ submitForm = (button) => {
     });
 }
 
-navigateTo = (path) => {
-    let newLocation = location.href;
-    if (location.href[location.href.length-1] !== '/')
-        newLocation += '/'
-    newLocation += path;
-    location.href = newLocation;
+navigateTo = (pathname) => {
+    let url = new URL(location);
+
+    if (url.pathname[url.pathname.length-1] !== '/')
+        url.pathname += '/'
+    url.pathname += pathname;
+
+    location.assign(url);
+}
+
+addParams = (params) => {
+    let url = new URL(location);
+
+    let oldParams = url.search.replace('?', '').split('&');
+
+    url.search = '?' + oldParams.reduce(
+        (acc, el) => {
+            if(!acc.includes(el.replace(/=.*$/, ''))) {
+                acc += (acc.length !== 0) ? '&' : '';
+                acc += el;
+            }
+            return acc;
+        },
+        params.join('&'))
+
+    location.assign(url);
 }

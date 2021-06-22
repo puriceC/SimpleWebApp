@@ -50,6 +50,8 @@ public class TemplateController {
 		model.addAttribute("view_object", "items");
 		model.addAttribute("headers", headers);
 		model.addAttribute("rows", rows);
+		model.addAttribute("page_number", pageNumber);
+		model.addAttribute("page_size", pageSize);
 		return "all-items-page";
 	}
 

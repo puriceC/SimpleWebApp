@@ -11,7 +11,9 @@
     <thead>
     <tr>
         <th th:each="header : ${headers}"
-            th:text="${header}"></th>
+            th:text="${header}"
+            th:onclick="@{ 'addParams([\'sort_by=' + ${header} + '\'])' }">
+        </th>
     </tr>
     </thead>
     <tbody>
@@ -23,8 +25,24 @@
     </tr>
     </tbody>
 </table>
+<div>
+    <input value="|&lt;"
+           onclick="addParams(['page_number=0'])"
+           type="button"/>
+    <input value="&lt;"
+           th:onclick="@{ 'addParams([\'page_number=' + ${page_number - 1} + '\'])' }"
+           type="button"/>
+
+    <input th:value="${page_number}"
+           type="button"
+           disabled/>
+
+    <input value="&gt;"
+           th:onclick="@{ 'addParams([\'page_number=' + ${page_number + 1} + '\'])' }"
+           type="button"/>
+</div>
 <input value="New"
-       onclick="navigateTo('./new')"
+       onclick="navigateTo('new')"
        type="button"/>
 </body>
 </html>

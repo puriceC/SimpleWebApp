@@ -10,7 +10,7 @@
 
     <div th:case="null">
         <h1>Resource not found!</h1>
-        <a th:href="@{'/' + ${view_object} + '/'}">Go back?</a>
+        <a href=".">Go back?</a>
     </div>
 
     <form th:case="*"
