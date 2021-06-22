@@ -27,19 +27,11 @@ class ItemServiceTest {
 	}
 
 	@Test
-	void getItemsCallsRepositoryFindAll() {
-		// when
-		underTest.getItems();
-		// then
-		verify(itemRepository).findAll();
-	}
-
-	@Test
 	void findItemCallsRepositoryFindById() {
 		// given
 		Integer id = 1;
 		// when
-		underTest.findItem(id);
+		underTest.findById(id);
 		// then
 		ArgumentCaptor<Integer> idArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
 		verify(itemRepository).findById(idArgumentCaptor.capture());
@@ -54,7 +46,7 @@ class ItemServiceTest {
 		item.setId(1);
 		item.setName("item1");
 		// when
-		underTest.insertItem(item);
+		underTest.insert(item);
 		// then
 		ArgumentCaptor<Item> itemArgumentCaptor = ArgumentCaptor.forClass(Item.class);
 		verify(itemRepository).save(itemArgumentCaptor.capture());
@@ -69,7 +61,7 @@ class ItemServiceTest {
 		Item item = new Item();
 		item.setName("item1");
 		// when
-		underTest.updateItem(id, item);
+		underTest.update(id, item);
 		// then
 		ArgumentCaptor<Item> itemArgumentCaptor = ArgumentCaptor.forClass(Item.class);
 		verify(itemRepository).save(itemArgumentCaptor.capture());
@@ -87,7 +79,7 @@ class ItemServiceTest {
 		item.setName("item1");
 		given(itemRepository.getById(id)).willReturn(item);
 		// when
-		underTest.deleteItem(id);
+		underTest.delete(id);
 		// then
 		ArgumentCaptor<Item> itemArgumentCaptor = ArgumentCaptor.forClass(Item.class);
 		verify(itemRepository).delete(itemArgumentCaptor.capture());

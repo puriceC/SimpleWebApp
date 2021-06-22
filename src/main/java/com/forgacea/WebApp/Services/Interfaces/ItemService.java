@@ -6,17 +6,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ItemService {
-	List<Item> getItems();
 
-	List<Item> getItemPage(int pageSize, int pageNumber);
+	List<Item> getPage(int pageSize, int pageNumber, String sortOrder);
 
-	List<Item> getItemSortedPage(int pageSize, int pageNumber, String sortOrder);
+	Optional<Item> findById(Integer id);
 
-	Optional<Item> findItem(Integer id);
+	Item insert(Item item);
 
-	Item insertItem(Item item);
+	void update(Integer id, Item item);
 
-	void updateItem(Integer id, Item item);
-
-	void deleteItem(Integer id);
+	void delete(Integer id);
 }

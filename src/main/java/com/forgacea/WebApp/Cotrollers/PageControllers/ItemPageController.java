@@ -25,7 +25,7 @@ public class ItemPageController {
 	private static final Logger logger = LoggerFactory.getLogger(ItemPageController.class);
 
 	@Autowired
-	private ItemService itemService;
+	private ItemService service;
 	@Autowired
 	private ObjectMapper objectMapper;
 
@@ -35,7 +35,7 @@ public class ItemPageController {
 								   @RequestParam(name = "sort_by", defaultValue = "") String sortBy,
 								   Model model) {
 		// get a list of items
-		List<Item> items = itemService.getItemSortedPage(pageSize, pageNumber, sortBy);
+		List<Item> items = service.getPage(pageSize, pageNumber, sortBy);
 		// turn each item from java Object into a map of its properties
 		Object[] rows = items.stream().map(item -> objectMapper.convertValue(item, Map.class)).toArray();
 		// get the names of all fields of class Item
@@ -50,8 +50,8 @@ public class ItemPageController {
 	}
 
 	@GetMapping("/{id}")
-	public String viewItemDetailsPage(@PathVariable("id") int id, Model model) {
-		Optional<Item> item = itemService.findItem(id);
+	public String viewDetailsPage(@PathVariable("id") int id, Model model) {
+		Optional<Item> item = service.findById(id);
 
 		model.addAttribute("entity", "items");
 		model.addAttribute("fields", Item.class.getDeclaredFields());
@@ -65,7 +65,7 @@ public class ItemPageController {
 	}
 
 	@GetMapping("/new")
-	public String viewNewItemPage(Model model) {
+	public String viewNewPage(Model model) {
 		model.addAttribute("entity", "items");
 		model.addAttribute("fields", Item.class.getDeclaredFields());
 		logger.info("new page accessed");
