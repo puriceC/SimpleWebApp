@@ -10,16 +10,16 @@
 <table>
     <thead>
     <tr>
-        <th th:each="header : ${headers}"
-            th:text="${header}"
-            th:onclick="@{ 'addParams([\'sort_by=' + ${header} + '\'])' }">
+        <th th:each="field : ${fields}"
+            th:text="${field.getName()}"
+            th:onclick="@{ 'addParams([\'sort_by=' + ${field.getName()} + '\'])' }">
         </th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="row : ${rows}">
-        <td th:each="header : ${headers}">
-            <a th:text="${row.get(header)}"
+        <td th:each="field : ${fields}">
+            <a th:text="${row.get(field.getName())}"
                th:href="@{'/' + ${entity} + '/' + ${row.get('id')}}"></a>
         </td>
     </tr>

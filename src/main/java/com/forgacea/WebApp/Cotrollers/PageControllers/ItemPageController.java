@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,10 +36,8 @@ public class ItemPageController {
 		List<Item> items = service.getPage(pageSize, pageNumber, sortBy);
 		// turn each item from java Object into a map of its properties
 		Object[] rows = items.stream().map(item -> objectMapper.convertValue(item, Map.class)).toArray();
-		// get the names of all fields of class Item
-		Object[] headers = Arrays.stream(Item.class.getDeclaredFields()).map(Field::getName).toArray();
 		model.addAttribute("entity", "items");
-		model.addAttribute("headers", headers);
+		model.addAttribute("fields", Item.class.getDeclaredFields());
 		model.addAttribute("rows", rows);
 		model.addAttribute("page_number", pageNumber);
 		model.addAttribute("page_size", pageSize);
