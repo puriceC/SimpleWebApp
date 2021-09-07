@@ -1,12 +1,17 @@
 package com.forgacea.WebApp.Models;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "Users")
 public class User {
 	@Id
@@ -19,6 +24,21 @@ public class User {
 	@Column(nullable = false, columnDefinition = "TINYINT DEFAULT 1")
 	boolean enabled;
 
-	@OneToMany(mappedBy = "director")
-	Set<Movie> movies;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@ToString.Exclude
+	Set<Rating> ratings;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+		User user = (User) o;
+
+		return Objects.equals(username, user.username);
+	}
+
+	@Override
+	public int hashCode() {
+		return 562048007;
+	}
 }

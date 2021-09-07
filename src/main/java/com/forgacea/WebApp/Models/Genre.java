@@ -1,12 +1,17 @@
 package com.forgacea.WebApp.Models;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "Genres")
 public class Genre {
 	@Id
@@ -16,6 +21,21 @@ public class Genre {
 
 	String genre;
 
-	@OneToMany(mappedBy = "genre")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "genre")
+	@ToString.Exclude
 	Set<Movie> movies;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+		Genre genre = (Genre) o;
+
+		return Objects.equals(id, genre.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return 1887069089;
+	}
 }

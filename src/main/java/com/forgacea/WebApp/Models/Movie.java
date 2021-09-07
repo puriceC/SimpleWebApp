@@ -1,15 +1,19 @@
 package com.forgacea.WebApp.Models;
 
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.ALL;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "Movies")
 public class Movie {
 	@Id
@@ -21,10 +25,12 @@ public class Movie {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name="genre")
+	@ToString.Exclude
 	Genre genre;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name="director")
+	@ToString.Exclude
 	Director director;
 
 	@ManyToMany(cascade=ALL)
@@ -33,9 +39,24 @@ public class Movie {
 			joinColumns = { @JoinColumn(name = "movie_id") },
 			inverseJoinColumns = { @JoinColumn(name = "actor_id") }
 	)
+	@ToString.Exclude
 	Set<Actor> actors;
 
-	@OneToMany(mappedBy = "movie")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
+	@ToString.Exclude
 	Set<Rating> ratings;
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+		Movie movie = (Movie) o;
+
+		return Objects.equals(id, movie.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return 693411677;
+	}
 }

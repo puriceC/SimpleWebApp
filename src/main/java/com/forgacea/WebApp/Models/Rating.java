@@ -1,14 +1,16 @@
 package com.forgacea.WebApp.Models;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Set;
-
-import static javax.persistence.CascadeType.ALL;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "Ratings")
 public class Rating {
 	@Id
@@ -20,10 +22,25 @@ public class Rating {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_movie")
+	@ToString.Exclude
 	Movie movie;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_user")
+	@ToString.Exclude
 	User user;
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+		Rating rating = (Rating) o;
+
+		return Objects.equals(id, rating.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return 708680207;
+	}
 }
