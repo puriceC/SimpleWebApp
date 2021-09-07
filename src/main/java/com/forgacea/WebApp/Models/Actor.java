@@ -12,8 +12,9 @@ import static javax.persistence.CascadeType.ALL;
 @Table(name = "Actors")
 public class Actor {
 	@Id
+	@Column(name = "id_actor")
 	@GeneratedValue
-	int id_actor;
+	int id;
 
 	String name;
 

@@ -10,8 +10,9 @@ import java.util.Set;
 @Table(name = "Directors")
 public class Director {
 	@Id
+	@Column(name = "id_director")
 	@GeneratedValue
-	int id_director;
+	int id;
 
 	String name;
 
