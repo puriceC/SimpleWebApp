@@ -46,6 +46,14 @@ public class Movie {
 	@ToString.Exclude
 	Set<Rating> ratings;
 
+	public float getRating(){
+		float sum = 0;
+		for(Rating r : ratings){
+			sum += r.rating;
+		}
+		return sum/ratings.size();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

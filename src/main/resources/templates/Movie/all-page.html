@@ -27,8 +27,8 @@
                th:href="@{'/movie/' + ${movie.id}}"></a>
         </td>
         <td>
-            <!--a th:text="${movie.rating}"
-               th:href="@{'/movie/' + ${movie.rating}}"></a-->
+            <a th:text="${movie.getRating()}"
+               th:href="@{'/movie/' + ${movie.id}}"></a>
         </td>
     </tr>
     </tbody>
