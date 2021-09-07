@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:if="${movie != null}" th:text="${movie.title}"></title>
+    <title th:if="${movie == null}">Movie not found</title>
+    <script src="/functions.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div th:if="${movie == null}">
+        <h1>Resource not found!</h1>
+        <a href=".">Go back?</a>
+    </div>
+
+    <form th:if="${movie != null}"
+          th:action="@{'/api/movies/' + ${movie.id}}">
+        <label>Title: </label>
+        <label>Genre: </label>
+        <label>Director: </label>
+        <label>Actors: </label>
+        <label>Rating: </label>
+    </form>
+
+</body>
+</html>

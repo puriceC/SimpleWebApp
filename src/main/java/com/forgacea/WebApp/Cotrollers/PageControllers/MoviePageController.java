@@ -49,13 +49,8 @@ public class MoviePageController {
 	public String viewDetailsPage(@PathVariable("id") int id, Model model) {
 		Optional<Movie> movie = service.findById(id);
 
-		model.addAttribute("entity", "movies");
-		model.addAttribute("fields", Movie.class.getDeclaredFields());
-		if (movie.isPresent()) {
-			model.addAttribute("details", objectMapper.convertValue(movie.get(), Map.class));
-		} else {
-			model.addAttribute("details", null);
-		}
+		model.addAttribute("movie", movie.orElse(null));
+
 		logger.info("details page accessed");
 		return "Movie/details-page";
 	}

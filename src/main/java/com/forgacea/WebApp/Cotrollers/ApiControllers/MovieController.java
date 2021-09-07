@@ -36,7 +36,7 @@ public class MovieController {
 	}
 
 	@PostMapping
-	ResponseEntity<Movie> insert(@RequestBody Map<String, String> req){
+	ResponseEntity<Movie> insert(@RequestBody Map<String, String> req) {
 		String title = req.get("title");
 		String genre = req.get("genre");
 		String director = req.get("director");
