@@ -1,5 +1,6 @@
 package com.forgacea.WebApp.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -25,11 +26,13 @@ public class Movie {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name="genre")
+	@JsonIgnoreProperties("movies")
 	@ToString.Exclude
 	Genre genre;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name="director")
+	@JsonIgnoreProperties("movies")
 	@ToString.Exclude
 	Director director;
 
@@ -39,18 +42,21 @@ public class Movie {
 			joinColumns = { @JoinColumn(name = "movie_id") },
 			inverseJoinColumns = { @JoinColumn(name = "actor_id") }
 	)
+	@JsonIgnoreProperties("movies")
 	@ToString.Exclude
 	Set<Actor> actors;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
+	@JsonIgnoreProperties("movie")
 	@ToString.Exclude
 	Set<Rating> ratings;
 
 	public float getRating(){
+		if (ratings == null)
+			return Float.NaN;
 		float sum = 0;
-		for(Rating r : ratings){
+		for(Rating r : ratings)
 			sum += r.rating;
-		}
 		return sum/ratings.size();
 	}
 

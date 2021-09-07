@@ -1,5 +1,6 @@
 package com.forgacea.WebApp.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -22,6 +23,7 @@ public class Director {
 	String name;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "director")
+	@JsonIgnoreProperties("director")
 	@ToString.Exclude
 	Set<Movie> movies;
 

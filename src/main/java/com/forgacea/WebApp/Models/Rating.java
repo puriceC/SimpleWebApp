@@ -1,5 +1,6 @@
 package com.forgacea.WebApp.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -22,11 +23,13 @@ public class Rating {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_movie")
+	@JsonIgnoreProperties("ratings")
 	@ToString.Exclude
 	Movie movie;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_user")
+	@JsonIgnoreProperties("ratings")
 	@ToString.Exclude
 	User user;
 

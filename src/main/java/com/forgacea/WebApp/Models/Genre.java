@@ -1,5 +1,6 @@
 package com.forgacea.WebApp.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -23,6 +24,7 @@ public class Genre {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "genre")
 	@ToString.Exclude
+	@JsonIgnoreProperties("genre")
 	Set<Movie> movies;
 
 	@Override

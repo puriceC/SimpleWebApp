@@ -1,5 +1,6 @@
 package com.forgacea.WebApp.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -25,6 +26,7 @@ public class User {
 	boolean enabled;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@JsonIgnoreProperties("user")
 	@ToString.Exclude
 	Set<Rating> ratings;
 

@@ -6,7 +6,6 @@ import com.forgacea.WebApp.Services.Interfaces.MovieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,8 +62,6 @@ public class MoviePageController {
 
 	@GetMapping("/new")
 	public String viewNewPage(Model model) {
-		model.addAttribute("entity", "movies");
-		model.addAttribute("fields", Movie.class.getDeclaredFields());
 		logger.info("new page accessed");
 		return "Movie/new-page";
 	}
