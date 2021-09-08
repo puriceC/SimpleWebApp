@@ -20,15 +20,15 @@
     <tr th:each="movie : ${movies}">
         <td>
             <a th:text="${movie.title}"
-               th:href="@{'/movie/' + ${movie.title}}"></a>
+               th:href="@{'/movies/' + ${movie.id}}"></a>
         </td>
         <td>
             <a th:text="${movie.genre.genre}"
-               th:href="@{'/movie/' + ${movie.id}}"></a>
+               th:href="@{'/movies/' + ${movie.id}}"></a>
         </td>
         <td>
             <a th:text="${movie.getRating()}"
-               th:href="@{'/movie/' + ${movie.id}}"></a>
+               th:href="@{'/movies/' + ${movie.id}}"></a>
         </td>
     </tr>
     </tbody>
