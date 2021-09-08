@@ -10,6 +10,7 @@ import java.util.Set;
 
 import static javax.persistence.CascadeType.ALL;
 
+@JsonIgnoreProperties("hibernateLazyInitializer")
 @Entity
 @Getter
 @Setter

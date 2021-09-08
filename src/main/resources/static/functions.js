@@ -1,6 +1,6 @@
 getSuccessHandler = (btn) => {
     if (btn.value === 'Delete')
-        return () => navigateTo('..');
+        return () => navigateTo('../..');
     if (btn.value === 'Create')
         return (retVal) => navigateTo('../' + retVal.id);
     return (e) => alert('Success');

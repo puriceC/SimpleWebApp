@@ -55,6 +55,16 @@ public class MoviePageController {
 		return "Movie/details-page";
 	}
 
+	@GetMapping("/admin/{id}")
+	public String viewEditPage(@PathVariable("id") int id, Model model) {
+		Optional<Movie> movie = service.findById(id);
+
+		model.addAttribute("movie", movie.orElse(null));
+
+		logger.info("edit page accessed");
+		return "Movie/edit-page";
+	}
+
 	@GetMapping("/new")
 	public String viewNewPage(Model model) {
 		logger.info("new page accessed");

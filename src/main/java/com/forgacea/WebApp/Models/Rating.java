@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.util.Objects;
 
+@JsonIgnoreProperties("hibernateLazyInitializer")
 @Entity
 @Getter
 @Setter

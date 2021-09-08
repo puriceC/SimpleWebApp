@@ -6,6 +6,7 @@ import com.forgacea.WebApp.Models.Movie;
 import com.forgacea.WebApp.Repositories.DirectorRepository;
 import com.forgacea.WebApp.Repositories.GenreRepository;
 import com.forgacea.WebApp.Services.Interfaces.MovieService;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +36,12 @@ public class MovieController {
 		this.service = service;
 	}
 
-	@PostMapping
-	ResponseEntity<Movie> insert(@RequestBody Map<String, String> req) {
-		String title = req.get("title");
-		String genre = req.get("genre");
-		String director = req.get("director");
-		logger.info(format("insert called with %s,%s,%s", title, genre, director));
-		Movie movie = new Movie();
+	@NotNull
+	private Movie setMovieProperties(Movie movie, Map<String, String> properties) {
+		String title = properties.get("title");
+		String genre = properties.get("genre");
+		String director = properties.get("director");
+		logger.info(format("request made with %s,%s,%s", title, genre, director));
 		movie.setTitle(title);
 
 		ExampleMatcher matcher = ExampleMatcher.matchingAny().withIgnorePaths("id");
@@ -49,35 +49,33 @@ public class MovieController {
 		Genre genreEg = new Genre();
 		genreEg.setGenre(genre);
 		Optional<Genre> optionalGenre = genreRepository.findOne(Example.of(genreEg, matcher));
-		if (optionalGenre.isEmpty())
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		movie.setGenre(optionalGenre.get());
-		
+		optionalGenre.ifPresent(movie::setGenre);
+
 		Director directorEg = new Director();
 		directorEg.setName(director);
 		Optional<Director> optionalDirector = directorRepository.findOne(Example.of(directorEg, matcher));
-		if (optionalDirector.isEmpty())
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		movie.setDirector(optionalDirector.get());
-		
+		optionalDirector.ifPresent(movie::setDirector);
+
+		return movie;
+	}
+
+	@PostMapping
+	ResponseEntity<Movie> insert(@RequestBody Map<String, String> properties) {
+		Movie movie = setMovieProperties(new Movie(), properties);
 		Movie returned = service.insert(movie);
 		return new ResponseEntity<>(returned, HttpStatus.OK);
 	}
 
-//	@PostMapping
-//	ResponseEntity<Movie> insert(@RequestBody Movie movie){
-//		logger.info(format("insert called with %s", movie));
-//		Movie returned = service.insert(movie);
-//		return new ResponseEntity<>(returned, HttpStatus.OK);
-//	}
-
 	@PutMapping({"/{id}"})
-	ResponseEntity<Movie> update(@PathVariable Integer id, @RequestBody Movie movie) {
-		logger.info(format("update called with id = %d and %s", id, movie));
-		if (service.findById(id).isEmpty()) {
+	ResponseEntity<Movie> update(@PathVariable Integer id, @RequestBody Map<String, String> properties) {
+
+		Optional<Movie> optionalMovie = service.findById(id);
+		if (optionalMovie.isEmpty()) {
 			logger.info("Movie to be updated doesn't exist");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		Movie movie = setMovieProperties(optionalMovie.get(), properties);
+		logger.info(format("update called with id = %d and %s", id, movie));
 		service.update(id, movie);
 		Optional<Movie> updated = service.findById(id);
 		if (updated.isEmpty()) {
