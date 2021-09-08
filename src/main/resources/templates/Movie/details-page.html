@@ -12,14 +12,12 @@
         <a href=".">Go back?</a>
     </div>
 
-    <form th:if="${movie != null}"
-          th:action="@{'/api/movies/' + ${movie.id}}">
-        <label>Title: </label>
-        <label>Genre: </label>
-        <label>Director: </label>
-        <label>Actors: </label>
-        <label>Rating: </label>
-    </form>
-
+    <div th:if="${movie != null}">
+        <label>Title: </label> <h4 th:text="${movie.title}"></h4>
+        <label>Genre: </label> <h4 th:text="${movie.genre.genre}"></h4>
+        <label>Director: </label> <h4 th:text="${movie.director.name}"></h4>
+        <label th:if="${movie.actors.size() > 0}">Actors: </label> <h4 th:each="actor: ${movie.actors}" th:text="${actor.name}"></h4>
+        <label>Rating: </label> <h4 th:text="${movie.rating}"></h4>
+    </div>
 </body>
 </html>
