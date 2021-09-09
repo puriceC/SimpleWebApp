@@ -18,6 +18,10 @@
         <label>Director: </label> <h4 th:text="${movie.director.name}"></h4>
         <label th:if="${movie.actors.size() > 0}">Actors: </label> <h4 th:each="actor: ${movie.actors}" th:text="${actor.name}"></h4>
         <label>Rating: </label> <h4 th:text="${movie.rating}"></h4>
+        <form th:action="@{'/api/rate/' + ${movie.id}}">
+            <input name="rating" type="number" min="1" max="10">
+            <input value='Rate' onclick="submitForm(this)" type="button"/>
+        </form>
     </div>
 </body>
 </html>

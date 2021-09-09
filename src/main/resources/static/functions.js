@@ -9,7 +9,7 @@ getSuccessHandler = (btn) => {
 getType = (btn) => {
     if (btn.value === 'Delete')
         return 'DELETE';
-    if (btn.value === 'Update')
+    if (btn.value === 'Update' || btn.value === 'Rate')
         return 'PUT';
     return 'POST';
 }
