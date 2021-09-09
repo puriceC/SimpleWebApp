@@ -10,9 +10,14 @@
 <table>
     <thead>
     <tr>
-        <th th:each="field : ${fields}"
-            th:text="${field}"
-            th:onclick="@{ 'addParams([\'sort_by=' + ${field} + '\'])' }">
+        <th onclick='addParams(["sort_by=title"])'>
+            Title
+        </th>
+        <th onclick='addParams(["sort_by=genre"])'>
+            Genre
+        </th>
+        <th onclick='addParams(["sort_by=rating"])'>
+            Rating
         </th>
     </tr>
     </thead>
@@ -29,6 +34,14 @@
         <td>
             <a th:text="${movie.getRating()}"
                th:href="@{'/movies/' + ${movie.id}}"></a>
+        </td>
+        <td th:if="${role} == 'ADMIN'">
+            <a th:href="@{'/movies/admin/' + ${movie.id}}">
+                <img src="https://cdn.iconscout.com/icon/free/png-256/edit-2653317-2202989.png"
+                     width="16"
+                     height="16"
+                     alt="edit button" />
+            </a>
         </td>
     </tr>
     </tbody>
@@ -49,8 +62,9 @@
            th:onclick="@{ 'addParams([\'page_number=' + ${page_number + 1} + '\'])' }"
            type="button"/>
 </div>
-<input value="New"
-       onclick="navigateTo('new')"
+<input th:if="${role} == 'ADMIN'"
+       value="New"
+       onclick="navigateTo('admin/new')"
        type="button"/>
 </body>
 </html>
