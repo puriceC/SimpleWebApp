@@ -3,6 +3,8 @@ getSuccessHandler = (btn) => {
         return () => navigateTo('../..');
     if (btn.value === 'Create')
         return (retVal) => navigateTo('../' + retVal.id);
+    if (btn.value === 'Rate')
+        return () => location.reload();
     return (e) => alert('Success');
 }
 
@@ -19,6 +21,7 @@ submitForm = (button) => {
     let type = getType(button);
     let formUrl = form.attr('action');
     let onSuccess = getSuccessHandler(button);
+    let onError = (r,e)=>{console.log(r,e);};
     let formData = form.serializeArray().reduce(
                 (data, field) => {
                     data[field.name] = field.value;
@@ -30,6 +33,7 @@ submitForm = (button) => {
       url: formUrl,
       data: JSON.stringify(formData),
       success: onSuccess,
+      error: onError,
       dataType: "json",
       contentType : "application/json"
     });

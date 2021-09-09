@@ -51,6 +51,6 @@ public class RatingController {
 		rating.setUser(user.get());
 
 		service.insert(rating);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(rating, HttpStatus.OK);
 	}
 }
