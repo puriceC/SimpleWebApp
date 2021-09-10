@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:if="${genre != null}" th:text="${genre.genre}"></title>
+    <title th:if="${genre == null}">Genre not found</title>
+    <script src="/functions.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div th:if="${genre == null}">
+    <h1>Genre not found!</h1>
+    <a href="..">Go back?</a>
+</div>
+
+<form th:if="${genre != null}"
+      th:action="@{'/api/genres/' + ${genre.id}}">
+    <input th:value="${genre.genre}"
+           name="genre"
+           placeholder="Genre"/>
+    <input value='Update' onclick="submitForm(this)" type="button"/>
+    <input value='Delete' onclick="submitForm(this)" type="button"/>
+</form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:if="${director != null}" th:text="${director.name}"></title>
+    <title th:if="${director == null}">Director not found</title>
+    <script src="/functions.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div th:if="${director == null}">
+        <h1>Director not found!</h1>
+        <a href="..">Go back?</a>
+    </div>
+
+    <form th:if="${director != null}"
+          th:action="@{'/api/directors/' + ${director.id}}">
+        <input th:value="${director.name}"
+               name="name"
+               placeholder="Name"/>
+        <input value='Update' onclick="submitForm(this)" type="button"/>
+        <input value='Delete' onclick="submitForm(this)" type="button"/>
+    </form>
+</div>
+
+</body>
+</html>

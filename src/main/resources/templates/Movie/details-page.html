@@ -8,16 +8,41 @@
 </head>
 <body>
     <div th:if="${movie == null}">
-        <h1>Resource not found!</h1>
+        <h1>Movie not found!</h1>
         <a href=".">Go back?</a>
     </div>
 
     <div th:if="${movie != null}">
-        <label>Title: </label> <h4 th:text="${movie.title}"></h4>
-        <label>Genre: </label> <h4 th:text="${movie.genre.genre}"></h4>
-        <label>Director: </label> <h4 th:text="${movie.director.name}"></h4>
-        <label th:if="${movie.actors.size() > 0}">Actors: </label> <h4 th:each="actor: ${movie.actors}" th:text="${actor.name}"></h4>
-        <label>Rating: </label> <h4 th:text="${movie.rating}"></h4>
+        <p>
+            <label>Title: </label>
+            <label th:text="${movie.title}"></label>
+        </p>
+
+        <p>
+            <label>Genre: </label>
+            <a th:text="${movie.genre.genre}"
+               th:href="@{'/genres/' + ${movie.genre.id}}"></a>
+        </p>
+
+        <p>
+            <label>Director: </label>
+            <a th:text="${movie.director.name}"
+               th:href="@{'/directors/' + ${movie.director.id}}"></a>
+        </p>
+
+        <p>
+            <label th:if="${movie.actors.size() > 0}">Actors: </label>
+            <a th:each="actor: ${movie.actors}"
+               th:text="${actor.name}"
+               style="padding:3px"
+               th:href="@{'/actors/' + ${actor.id}}"></a>
+        </p>
+
+        <p>
+            <label>Rating: </label>
+            <label th:text="${movie.rating}"></label>
+        </p>
+
         <form th:action="@{'/api/rate/' + ${movie.id}}">
             <input name="rating" type="number" min="1" max="10">
             <input value='Rate' onclick="submitForm(this)" type="button"/>

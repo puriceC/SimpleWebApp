@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>New director</title>
+    <script src="/functions.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<form action="/api/directors"
+      onsubmit="return false;">
+    <input name="name"
+           placeholder="Name"/>
+    <input value="Create" onclick="submitForm(this)" type="button"/>
+</form>
+</body>
+</html>

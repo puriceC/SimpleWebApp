@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>New genre</title>
+    <script src="/functions.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<form action="/api/genres"
+      onsubmit="return false;">
+    <input name="genre"
+           placeholder="Genre"/>
+    <input value="Create" onclick="submitForm(this)" type="button"/>
+</form>
+</body>
+</html>

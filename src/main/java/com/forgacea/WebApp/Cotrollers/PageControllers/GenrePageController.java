@@ -1,8 +1,8 @@
 package com.forgacea.WebApp.Cotrollers.PageControllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.forgacea.WebApp.Models.Movie;
-import com.forgacea.WebApp.Services.Interfaces.MovieService;
+import com.forgacea.WebApp.Models.Genre;
+import com.forgacea.WebApp.Services.Interfaces.GenreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,65 +14,62 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/movies")
-public class MoviePageController {
-	private static final Logger logger = LoggerFactory.getLogger(MoviePageController.class);
+@RequestMapping("/genres")
+public class GenrePageController {
+	private static final Logger logger = LoggerFactory.getLogger(GenrePageController.class);
 
 	@Autowired
-	private MovieService service;
+	private GenreService service;
 	@Autowired
 	private ObjectMapper objectMapper;
 
 	@GetMapping
-	public String viewAllMoviesPage(@RequestParam(name = "page_size", defaultValue = "20") int pageSize,
+	public String viewAllGenresPage(@RequestParam(name = "page_size", defaultValue = "20") int pageSize,
 									@RequestParam(name = "page_number", defaultValue = "0")  int pageNumber,
 									@RequestParam(name = "sort_by", defaultValue = "") String sortBy,
 									Model model,
 									SecurityContextHolderAwareRequestWrapper requestWrapper) {
-		// get a list of movies
-		List<Movie> movies = service.getPage(pageSize, pageNumber, sortBy);
+		// get a list of genres
+		List<Genre> genres = service.getPage(pageSize, pageNumber, sortBy);
 
 		if (requestWrapper.isUserInRole("ADMIN")){
 			model.addAttribute("role", "ADMIN");
 		}
 
-		model.addAttribute("movies", movies);
+		model.addAttribute("genres", genres);
 		model.addAttribute("page_number", pageNumber);
 		model.addAttribute("page_size", pageSize);
 		logger.info("all page accessed");
-		return "Movie/all-page";
+		return "Genre/all-page";
 	}
 
 	@GetMapping("/{id}")
 	public String viewDetailsPage(@PathVariable("id") int id, Model model) {
-		Optional<Movie> movie = service.findById(id);
+		Optional<Genre> genre = service.findById(id);
 
-		model.addAttribute("movie", movie.orElse(null));
+		model.addAttribute("genre", genre.orElse(null));
 
 		logger.info("details page accessed");
-		return "Movie/details-page";
+		return "Genre/details-page";
 	}
 
 	@GetMapping("/admin/{id}")
 	public String viewEditPage(@PathVariable("id") int id, Model model) {
-		Optional<Movie> movie = service.findById(id);
+		Optional<Genre> genre = service.findById(id);
 
-		model.addAttribute("movie", movie.orElse(null));
+		model.addAttribute("genre", genre.orElse(null));
 
 		logger.info("edit page accessed");
-		return "Movie/edit-page";
+		return "Genre/edit-page";
 	}
 
 	@GetMapping("/admin/new")
 	public String viewNewPage() {
 		logger.info("new page accessed");
-		return "Movie/new-page";
+		return "Genre/new-page";
 	}
 }

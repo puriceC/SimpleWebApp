@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>All Movies</title>
+    <title>All Genres</title>
     <link href="/styles.css" rel="stylesheet">
     <script src="/functions.js" type="text/javascript"></script>
 </head>
@@ -10,33 +10,26 @@
 <table>
     <thead>
     <tr>
-        <th onclick='addParams(["sort_by=title"])'>
-            Title
-        </th>
-        <th onclick='addParams(["sort_by=genre"])'>
+        <th>
             Genre
         </th>
         <th>
-            Rating
+            Movie count
         </th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="movie : ${movies}">
+    <tr th:each="genre : ${genres}">
         <td>
-            <a th:text="${movie.title}"
-               th:href="@{'/movies/' + ${movie.id}}"></a>
+            <a th:text="${genre.genre}"
+               th:href="@{'/genres/' + ${genre.id}}"></a>
         </td>
         <td>
-            <a th:text="${movie.genre.genre}"
-               th:href="@{'/genres/' + ${movie.genre.id}}"></a>
-        </td>
-        <td>
-            <a th:text="${movie.getRating()}"
-               th:href="@{'/movies/' + ${movie.id}}"></a>
+            <a th:text="${genre.movies.size()}"
+               th:href="@{'/genre/' + ${genre.id}}"></a>
         </td>
         <td th:if="${role} == 'ADMIN'">
-            <a th:href="@{'/movies/admin/' + ${movie.id}}">
+            <a th:href="@{'/genres/admin/' + ${genre.id}}">
                 <img src="https://cdn.iconscout.com/icon/free/png-256/edit-2653317-2202989.png"
                      width="16"
                      height="16"

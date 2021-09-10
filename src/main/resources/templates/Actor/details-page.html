@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:if="${actor != null}" th:text="${actor.name}"></title>
+    <title th:if="${actor == null}">Actor not found</title>
+    <script src="/functions.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div th:if="${actor == null}">
+        <h1>Actor not found!</h1>
+        <a href=".">Go back?</a>
+    </div>
+
+    <div th:if="${actor != null}">
+
+        <p>
+            <label>Name: </label>
+            <label th:text="${actor.name}"></label>
+        </p>
+
+        <p>
+            <label th:if="${actor.movies.size() > 0}">Movies: </label>
+            <a th:each="movie: ${actor.movies}"
+               th:text="${movie.title}"
+               style="padding:3px"
+               th:href="@{'/movies/' + ${movie.id}}"></a>
+        </p>
+
+    </div>
+</body>
+</html>
